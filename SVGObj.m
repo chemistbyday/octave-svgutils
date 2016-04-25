@@ -1,13 +1,13 @@
 classdef SVGObj < handle
 
-  properties (Access = private)
+  properties (SetAccess = private)
     objproperties = struct ();
     parent = [];
     children = {};
     contents = struct;
   end
   
-  properties (Access = protected, Constant)
+  properties (SetAccess = protected, Constant)
     canBeParent = false;
     canBeChild = false;
   end
@@ -28,8 +28,33 @@ classdef SVGObj < handle
       end
     end
     
-    %function h = get(obj,varargin)
-    %end
+    function h = get(obj,varargin)
+      % from http://wiki.octave.org/Object_oriented_programming
+      
+      publicproperties = fieldnames(obj);
+      tf = ismember(tolower(publicproperties),tolower(varargin));
+      if(nargin == 1)
+        % no arguments in, so retrieve all public properties
+        retrievethese = publicproperties;
+      else
+        % retrieve only specified properties
+        retrievethese = {publicproperties{tf}};
+      end
+      
+      n = numel(retrievethese);
+      if(n == 1)
+        h = obj.(retrievethese{1});
+      else
+        for i = 1:n
+          h.(retrievethese{i}) = obj.(retrievethese{i});
+        end
+      end
+      
+      unknown = {varargin{!ismember(varargin,publicproperties)}};
+      if(~isempty(unknown))
+        cellfun (@(x) warning ("SVGObj: get: Unknown field %s\n", x) , unknown);
+      end
+    end
     
     %function set(obj,varargin)
     % should this function be protected?  don't want accidental resetting of parent
