@@ -20,8 +20,8 @@ classdef SVGObj < handle
       elseif(nargin == 1)
         if(isa(varargin,'SVGObj'))
           obj = copy(varargin);
-        elseif(isa(varargin,'string'))
-          obj = SVGObjOfType(varargin);
+        else
+          error('SVGObj: invalid argument type to constructor!');
         end
       else
         error('SVGObj: invalid number of arguments to constructor!');
