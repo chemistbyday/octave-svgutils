@@ -1,0 +1,9 @@
+%% classdef bug reports
+
+fieldnames(obj)
+
+  According to http://www.mathworks.com/help/matlab/ref/fieldnames.html, fieldnames(obj) should return only the names of the pulic properties of object obj
+  
+  In Octave, fieldnames(obj) returns names of ALL fields of object obj, and issues "warning: struct: converting a classdef object into a struct overrides the access restrictions defined for properties. All properties are returned, including private and protected ones."
+  
+...
