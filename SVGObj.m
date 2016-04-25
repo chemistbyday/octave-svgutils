@@ -77,13 +77,13 @@ classdef SVGObj < handle
           if(p.canBeParent)
             obj.parent = p;
           else
-            error('SVGObj:setparent: input cannot have children!');
+            error('SVGObj:setparent: target cannot have children!');
           end
         else
           error('SVGObj:setparent: object cannot be a child!');
         end
       else
-        error('SVGObj:setparent: input is not a SVGObj!');
+        error('SVGObj:setparent: target is not a SVGObj!');
       end
     end
   
